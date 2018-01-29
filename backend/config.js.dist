@@ -1,0 +1,7 @@
+module.exports = {
+    secret: 'token_aleatorio_para_o_jwt',
+    database: 'mongodb://127.0.0.1:27017/meanbase',
+    uploadPath: '/var/www/projeto/frontend/uploads/',
+    initialPort: 1010,
+    passFixture: 'senha_para_fixture',
+};

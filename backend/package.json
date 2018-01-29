@@ -1,0 +1,28 @@
+{
+  "name": "meanbase",
+  "version": "1.1.4",
+  "description": "Estrutura básica para criar um sistema com MEAN modular, login já incluído.",
+  "main": "index.js",
+  "dependencies": {
+    "async": "^1.5.0",
+    "bcrypt-nodejs": "^0.0.3",
+    "body-parser": "^1.14.1",
+    "connect-multiparty": "^2.0.0",
+    "cors": "^2.7.1",
+    "express": "^4.13.3",
+    "jsonwebtoken": "^5.4.0",
+    "moment": "^2.10.6",
+    "mongoose": "^4.1.9",
+    "mongoose-deep-populate": "^2.0.3",
+    "q": "^1.4.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.7.0",
+    "eslint-config-airbnb": "^15.1.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.3.0"
+  },
+  "author": "Rubens Fernandes",
+  "license": "MIT"
+}
