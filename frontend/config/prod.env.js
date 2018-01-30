@@ -1,5 +1,5 @@
 'use strict'
 module.exports = {
   NODE_ENV: '"production"',
-  API_ENV: '"http://vuebase.rubensfernandes.com.br"',
+  API_ENV: '"http://vuebase.rubens.ninja"',
 }
