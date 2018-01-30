@@ -3,6 +3,7 @@
 import './assets/bootstrap.min.css';
 import 'nprogress/nprogress.css';
 import 'bootstrap';
+import 'open-iconic/font/css/open-iconic-bootstrap.css';
 
 import Vue from 'vue'
 import App from './App'

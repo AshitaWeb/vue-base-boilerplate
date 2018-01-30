@@ -1,6 +1,7 @@
 import axios from 'axios'
 import ls from 'local-storage'
 import NProgress from 'nprogress'
+import router from '@/router'
 
 NProgress.configure({ showSpinner: false })
 
@@ -14,6 +15,11 @@ axios.interceptors.request.use(config => {
 })
 
 axios.interceptors.response.use(response => {
+
+  if (response.data.login) {
+    router.push('/logout')
+  }
+
   NProgress.done()
   return response
 }, error => {

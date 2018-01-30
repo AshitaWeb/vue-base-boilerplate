@@ -24,12 +24,14 @@
         <div class="form-group">
           <label for="image">URL image</label>
           <input v-model="form.image" type="text" class="form-control" id="image" placeholder="Url image">
+          <hr>
+          <img :src="form.image" :alt="form.name" class="rounded-circle img">
         </div>
         <div class="form-group">
           <button class="btn btn-primary">Save</button>
           <router-link to="/anime" class="btn btn-danger">Cancel</router-link>
         </div>
-        
+
         <div class="alert alert-success alert-dismissible" role="alert" v-show="hasSuccess">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -72,6 +74,7 @@ export default {
       this.$http.post('v1/anime', this.form).then((response) => {
         if (response.data.success) {
           this.hasSuccess = true
+          this.$router.push('/anime')
         } else {
           this.hasError = true
         }
