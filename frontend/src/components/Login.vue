@@ -1,6 +1,6 @@
 <template>
   <form class="form-signin" v-on:submit.prevent="logar">
-    <h2 class="form-signin-heading">Efetuar Login</h2>
+    <h2 class="form-signin-heading">Login</h2>
     <input v-model="form.login" type="text" class="form-control" placeholder="Login" required autofocus>
     <input v-model="form.password" type="password" class="form-control" placeholder="Senha" required>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
@@ -10,7 +10,7 @@
         <span aria-hidden="true">&times;</span>
         <span class="sr-only">Close</span>
       </button>
-      <strong>Erro!</strong> Usuário ou senha incorreto.
+      <strong>Erro!</strong> Wrong user or password.
     </div>
   </form>
 </template>

@@ -31,7 +31,7 @@
       </ul>
       <ul class="navbar-nav my-2 my-md-0 mr-md-3 ">
         <li class="nav-item">
-          <router-link to="/logout" class="nav-link">Sair</router-link>
+          <router-link to="/logout" class="nav-link">Logout</router-link>
         </li>
       </ul>
     </div>
