@@ -5,7 +5,7 @@
 
     <div class="row">
       <div class="col">
-        <router-link to="/anime/new" class="btn btn-success" role="button"><span class="oi oi-plus"></span></router-link>
+        <router-link to="/anime/new" class="btn btn-success" role="button">New</router-link>
         <hr>
       </div>
     </div>
@@ -27,11 +27,11 @@
                     <img :src="item.image" :alt="item.name" class="rounded-circle img">
                   </td>
                   <td>
-                    <router-link tag="button" class="btn btn-sm" title="Edit" :to="{ name: 'AnimeEdit', params: { id: item._id } }">
-                      <span class="oi oi-pencil"></span>
+                    <router-link title="Edit" :to="{ name: 'AnimeEdit', params: { id: item._id } }">
+                      edit
                     </router-link>
-
-                    <button @click="remove(item._id)" title="Remove" class="btn btn-sm btn-danger"><span class="oi oi-x"></span></button>
+                    /
+                    <a href="javascript;" @click="remove(item._id)" title="Remove">remove</a>
                   </td>
                 </tr>
               </tbody>
