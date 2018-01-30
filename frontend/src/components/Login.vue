@@ -2,7 +2,7 @@
   <form class="form-signin" v-on:submit.prevent="logar">
     <h2 class="form-signin-heading">Login</h2>
     <input v-model="form.login" type="text" class="form-control" placeholder="Login" required autofocus>
-    <input v-model="form.password" type="password" class="form-control" placeholder="Senha" required>
+    <input v-model="form.password" type="password" class="form-control" placeholder="Password" required>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
 
     <div class="alert alert-danger" role="alert" v-if="infoError">
