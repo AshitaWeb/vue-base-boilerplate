@@ -1,36 +1,27 @@
 <template>
 <div>
-  <div class="row">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <router-link tag="li" to="/" class="breadcrumb-item">
-          <a>Home</a>
-        </router-link>
-        <router-link tag="li" to="/anime" class="breadcrumb-item">
-          <a>Animes</a>
-        </router-link>
-        <li class="breadcrumb-item active">Edit Anime</li>
-      </ol>
-    </nav>
-  </div>
+
+  <breadcrumb></breadcrumb>
 
   <div class="row">
     <div class="col">
       <form v-on:submit.prevent="save">
+
         <div class="form-group">
           <label for="name">Name</label>
           <input v-model="form.name" type="text" class="form-control" id="name" placeholder="Name">
         </div>
+
         <div class="form-group">
           <label for="image">URL image</label>
           <input v-model="form.image" type="text" class="form-control" id="image" placeholder="Url image">
           <hr>
           <img :src="form.image" :alt="form.name" class="rounded-circle img">
-
         </div>
+
         <div class="form-group">
-          <button :disabled="!form._id" class="btn btn-primary">Update</button>
           <router-link to="/anime" class="btn btn-danger">Cancel</router-link>
+          <button :disabled="!form._id" class="btn btn-primary float-right">Update</button>
         </div>
 
         <div class="alert alert-success alert-dismissible" role="alert" v-show="hasSuccess">

@@ -10,6 +10,9 @@ import App from './App'
 import router from '@/router'
 import http from './services/http'
 
+import Breadcrumb from "@/components/Breadcrumb";
+Vue.component('breadcrumb', Breadcrumb);
+
 Vue.prototype.$http = http;
 Vue.config.productionTip = false
 

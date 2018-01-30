@@ -1,18 +1,7 @@
 <template>
 <div>
-  <div class="row">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <router-link tag="li" to="/" class="breadcrumb-item">
-          <a>Home</a>
-        </router-link>
-        <router-link tag="li" to="/anime" class="breadcrumb-item">
-          <a>Animes</a>
-        </router-link>
-        <li class="breadcrumb-item active">New Anime</li>
-      </ol>
-    </nav>
-  </div>
+
+  <breadcrumb></breadcrumb>
 
   <div class="row">
     <div class="col">
@@ -28,8 +17,8 @@
           <img :src="form.image" :alt="form.name" class="rounded-circle img">
         </div>
         <div class="form-group">
-          <button class="btn btn-primary">Save</button>
           <router-link to="/anime" class="btn btn-danger">Cancel</router-link>
+          <button class="btn btn-primary float-right">Save</button>
         </div>
 
         <div class="alert alert-success alert-dismissible" role="alert" v-show="hasSuccess">

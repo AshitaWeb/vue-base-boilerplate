@@ -1,15 +1,8 @@
 <template>
   <div>
-    <div class="row">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <router-link tag="li" to="/" class="breadcrumb-item">
-            <a>Home</a>
-          </router-link>
-          <li class="breadcrumb-item active">Anime</li>
-        </ol>
-      </nav>
-    </div>
+
+    <breadcrumb></breadcrumb>
+
     <div class="row">
       <div class="col">
         <router-link to="/anime/new" class="btn btn-success" role="button"><span class="oi oi-plus"></span></router-link>
