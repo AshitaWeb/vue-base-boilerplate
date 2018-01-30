@@ -27,12 +27,11 @@ npm run dev
   http://localhost:8080
 
 ## TODO
+  * !Learn more about stores!
   * Add https to server
   * Convert Breadcumbs to a component
-  * Add NProgress component to requests
-  * !Learn more about stores!
   * Learn how to create routes inside components
 
 Any help or pull request is welcome!
 
-:airplane: 
+:airplane:
