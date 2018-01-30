@@ -1,35 +1,31 @@
 import axios from 'axios'
 import ls from 'local-storage'
+import NProgress from 'nprogress'
+
+NProgress.configure({ showSpinner: false })
 
 axios.defaults.baseURL = `${process.env.API_ENV}/api`
 
 // Intercept the request to make sure the token is injected into the header.
 axios.interceptors.request.use(config => {
   config.headers.Authorization = `${ls('token')}`
+  NProgress.start()
   return config
 })
 
 axios.interceptors.response.use(response => {
-  //NProgress.done()
+  NProgress.done()
   return response
 }, error => {
-  //NProgress.done()
-  // Also, if we receive a Bad Request / Unauthorized error
-  // if (error.response.status === 400 || error.response.status === 401) {
-  //   // and we're not trying to login
-  // }
-
+  NProgress.done()
   return Promise.reject(error)
 })
 
 const http = {
-  post: (url, data) => {
-    return axios.post(url, data);
-  },
-  put: (url, data) => {
-    return axios.put(url, data);
-  },
+  post: (url, data) => axios.post(url, data),
+  put: (url, data) => axios.put(url, data),
   get: (url) => axios.get(url),
+  delete: (url, data) => axios.delete(url, data)
 };
 
 export default http;

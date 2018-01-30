@@ -24,7 +24,7 @@
             <tr>
               <th scope="col">Name</th>
               <th scope="col">Image</th>
-              <th scope="col">Opções</th>
+              <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -39,9 +39,9 @@
               </tr>
             </tbody>
         </table>
-        
+
     </div>
-  </div>        
+  </div>
 </div>
 </template>
 
