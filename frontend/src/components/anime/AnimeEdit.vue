@@ -9,7 +9,7 @@
         <router-link tag="li" to="/anime" class="breadcrumb-item">
           <a>Animes</a>
         </router-link>
-        <li class="breadcrumb-item active">New Anime</li>
+        <li class="breadcrumb-item active">Edit Anime</li>
       </ol>
     </nav>
   </div>
@@ -26,7 +26,7 @@
           <input v-model="form.image" type="text" class="form-control" id="image" placeholder="Url image">
         </div>
         <div class="form-group">
-          <button class="btn btn-primary">Save</button>
+          <button :disabled="!form._id" class="btn btn-primary">Update</button>
           <router-link to="/anime" class="btn btn-danger">Cancel</router-link>
         </div>
         
@@ -35,7 +35,7 @@
             <span aria-hidden="true">&times;</span>
             <span class="sr-only">Close</span>
           </button>
-          New anime created!
+          Anime updated!
         </div>
 
         <div class="alert alert-danger alert-dismissible" role="alert" v-show="hasError">
@@ -56,7 +56,7 @@
 <script>
 
 export default {
-  name: 'AnimeNew',
+  name: 'AnimeEdit',
   data() {
     return {
       hasSuccess: false,
@@ -64,12 +64,13 @@ export default {
       form: {
         name: '',
         image: '',
+        _id: ''
       }
     }
   },
   methods: {
     save() {
-      this.$http.post('v1/anime', this.form).then((response) => {
+      this.$http.put('v1/anime', this.form).then((response) => {
         if (response.data.success) {
           this.hasSuccess = true
         } else {
@@ -77,6 +78,12 @@ export default {
         }
       });
     }
+  },
+  beforeMount() {
+    this.$http.get('/v1/anime/' + this.$route.params.id).then((response) => {
+      if (response.data)
+      this.form = response.data
+    })
   }
 }
 </script>

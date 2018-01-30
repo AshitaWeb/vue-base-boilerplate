@@ -28,6 +28,7 @@ app.use('/api/v1', jwt);
 
 /*Modulos*/
 jwt.use('/usuario', require('./app/usuario'));
+jwt.use('/anime', require('./app/anime'));
 jwt.use('/config', require('./app/config'));
 
 var id = Number(process.env.id);
