@@ -16,7 +16,7 @@ axios.interceptors.request.use(config => {
 
 axios.interceptors.response.use(response => {
 
-  if (response.data.login) {
+  if (response.data.login === true) {
     router.push('/logout')
   }
 

@@ -29,11 +29,11 @@
                   <td>{{item.email}}</td>
                   <td>{{item.role}}</td>
                   <td>
-                    <router-link title="Edit" :to="{ name: 'Users', params: { id: item._id } }">
+                    <router-link title="Edit" :to="{ name: 'UsersEdit', params: { id: item._id } }">
                       edit
                     </router-link>
                     /
-                    <a href="javascript;" @click="remove(item._id)" title="Remove">remove</a>
+                    <a href="javascript;" @click.prevent="remove(item._id)" title="Remove">remove</a>
                   </td>
                 </tr>
               </tbody>
@@ -58,6 +58,7 @@ export default {
       this.$http.delete(`/v1/usuario/${id}`).then(() => {
         this.$http.get('/v1/usuario').then((response) => {
           this.data = response.data.data;
+          this.$router.push('/users');
         });
       })
     }
@@ -66,7 +67,7 @@ export default {
     this.$http.get('/v1/usuario').then((response) => {
       this.data = response.data.data;
     });
-  }
+  },
 }
 </script>
 

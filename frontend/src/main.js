@@ -13,6 +13,9 @@ import http from './services/http'
 import Breadcrumb from "@/components/Breadcrumb";
 Vue.component('breadcrumb', Breadcrumb);
 
+import AlertMessage from "@/components/AlertMessage";
+Vue.component('alertMessage', AlertMessage);
+
 Vue.prototype.$http = http;
 Vue.config.productionTip = false
 

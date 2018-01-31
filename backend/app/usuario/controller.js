@@ -6,8 +6,6 @@ var bcrypt = require('bcrypt-nodejs');
 exports.index = function(req, res) {
 	var texto = req.params.text;
 
-	console.log('aqui');
-
 	var filtro = {};
 	filtro.ativo = true;
 
@@ -61,11 +59,11 @@ exports.inativos = function(req, res) {
 
 exports.get = function(req, res) {
 	Model.findOne(
-			{_id: req.params.id},// Where
-			{password: 0},
-			function(err, data){ // o que fazer com o resultado
-				res.json(data);
-			}
+		{_id: req.params.id},// Where
+		{password: 0},
+		function(err, data){ // o que fazer com o resultado
+			res.json(data);
+		}
 	);
 }
 
@@ -95,11 +93,12 @@ exports.edit = function(req, res) {
 		function (err, model){
 			if (req.body.password && req.body.password !== "") {
 				model.password = req.body.password;
-				console.log("senha alterada!");
 			}
 			model.login = req.body.login;
 			model.nome = req.body.nome;
 			model.email = req.body.email;
+			model.name = req.body.name;
+			model.role = req.body.role;
 
 			model.save(function(err, data){
 				if (!err && data) {

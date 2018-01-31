@@ -7,50 +7,48 @@
     <div class="col">
       <form v-on:submit.prevent="save">
 
-        <div class="form-group">
+     <div class="form-group">
           <label for="name">Name</label>
           <input v-model="form.name" type="text" class="form-control" id="name" placeholder="Name">
         </div>
 
         <div class="form-group">
-          <label for="image">Login</label>
+          <label for="login">Login</label>
           <input v-model="form.login" type="text" class="form-control" id="login" placeholder="Login">
         </div>
 
         <div class="form-group">
-          <label for="image">Role</label>
-          <select name="role" id="role" v-model="role">
+          <label for="email">Email</label>
+          <input v-model="form.email" type="email" class="form-control" id="email" placeholder="user@email.com">
+        </div>
+
+        <div class="form-group">
+          <label for="role">Role</label>
+          <select name="role" id="role" class="form-control" v-model="form.role">
             <option value="" disabled="true">--select--</option>
             <option value="admin">Administrator</option>
-            <option value="user">Common</option>  
+            <option value="common">Common</option>  
           </select>
         </div>
 
         <div class="form-group">
-          <label for="image">Password</label>
-          <input v-model="form.password" type="password" class="form-control" id="password" placeholder="password">
+          <label for="password">Password</label>
+          <input v-model="form.password" type="password" autocomplete="false" class="form-control" id="password" @change="passwordChanged()" placeholder="">
+        </div>
+
+        <div class="form-group">
+          <label for="passwordConfirm">Confirm Password</label>
+          <input v-model="form.passwordConfirm" type="password" autocomplete="false" class="form-control" id="passwordConfirm" placeholder="">
         </div>
 
         <div class="form-group">
           <router-link to="/users" class="btn btn-danger">Cancel</router-link>
-          <button :disabled="!form._id" class="btn btn-primary float-right">Update</button>
+          <button class="btn btn-primary float-right">Save</button>
         </div>
 
-        <div class="alert alert-success alert-dismissible" role="alert" v-show="hasSuccess">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            <span class="sr-only">Close</span>
-          </button>
-          User updated!
-        </div>
-
-        <div class="alert alert-danger alert-dismissible" role="alert" v-show="hasError">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            <span class="sr-only">Close</span>
-          </button>
-          Error, try again.
-        </div>
+        <alert-message class='alert-danger' timeout="0"  :show="hasError"   :message="errorMessage"></alert-message>
+        <alert-message class='alert-success' :show="hasSuccess" :message="successMessage"></alert-message>
+        
 
       </form>
     </div>
@@ -61,29 +59,50 @@
 
 <script>
 
+      
+     
 export default {
   name: 'UsersEdit',
   data() {
     return {
       hasSuccess: false,
       hasError: false,
+      errorMessage: '',
+      hasSuccess: false,
+      successMessage: '',
+      validatePassword: false,
       form: {
-        name: '',
-        image: '',
-        _id: ''
+        login: '',
+        email: '',
+        role: '',
+        password: '',
+        passwordConfirm: '',
       }
     }
   },
   methods: {
     save() {
-      this.$http.put('v1/usuario', this.form).then((response) => {
-        if (response.data.success) {
-          this.hasSuccess = true
-          this.$router.push('/anime')
-        } else {
-          this.hasError = true
-        }
-      });
+       if(this.form.password != this.form.passwordConfirm && this.validatePassword == true) {
+        this.hasError = true
+        this.errorMessage = 'Password and password confirm must be equals.';
+      } else {
+        this.hasError = false;
+        this.$http.put('v1/usuario', this.form).then((response) => {
+          if (response.data.success) {
+            this.hasSuccess = true
+            this.successMessage = 'User edited.'
+            setTimeout(() => {
+              this.$router.push('/users')
+            }, 3000);
+          } else {
+            this.hasError = true;
+            this.errorMessage = response.err;
+          }
+        });
+      }
+    },
+    passwordChanged() {
+      this.validatePassword = true;
     }
   },
   beforeMount() {
@@ -92,5 +111,6 @@ export default {
       this.form = response.data
     })
   }
+
 }
 </script>
