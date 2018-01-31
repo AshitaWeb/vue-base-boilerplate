@@ -9,6 +9,11 @@ import AnimeHome from '@/components/anime/AnimeHome'
 import AnimeNew from '@/components/anime/AnimeNew'
 import AnimeEdit from '@/components/anime/AnimeEdit'
 
+import Users from '@/components/users/Users';
+import UsersHome from '@/components/users/UsersHome';
+import UsersNew from '@/components/users/UsersNew';
+import UsersEdit from '@/components/users/UsersEdit';
+
 Vue.use(Router)
 
 export default new Router({
@@ -25,6 +30,7 @@ export default new Router({
         showOnNav: true,
       }
     },
+    // ANIMES
     {
       path: '/anime',
       redirect: '/anime/home',
@@ -55,6 +61,43 @@ export default new Router({
           path: 'edit/:id',
           name: 'AnimeEdit',
           component: AnimeEdit,
+          meta: {
+            humanName: 'Edit'
+          },
+        }
+      ],
+    },
+    // USERS
+    {
+      path: '/users',
+      redirect: '/users/home',
+      name: 'Users',
+      component: Users,
+      meta: {
+        humanName: 'Users',
+        showOnNav: true
+      },
+      children: [
+        {
+          path: 'home',
+          name: 'UsersHome',
+          component: UsersHome,
+          meta: {
+            humanName: 'List'
+          },
+        },
+        {
+          path: 'new',
+          name: 'UsersNew',
+          component: UsersNew,
+          meta: {
+            humanName: 'New'
+          },
+        },
+        {
+          path: 'edit/:id',
+          name: 'UsersEdit',
+          component: UsersEdit,
           meta: {
             humanName: 'Edit'
           },

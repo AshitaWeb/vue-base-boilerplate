@@ -6,6 +6,8 @@ var bcrypt = require('bcrypt-nodejs');
 exports.index = function(req, res) {
 	var texto = req.params.text;
 
+	console.log('aqui');
+
 	var filtro = {};
 	filtro.ativo = true;
 
@@ -26,7 +28,6 @@ exports.index = function(req, res) {
 					response.data = data;
 					res.json(response);
 				});
-
 		});
 }
 
