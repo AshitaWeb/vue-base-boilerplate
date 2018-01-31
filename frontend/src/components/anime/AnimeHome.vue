@@ -44,8 +44,6 @@
 
 <script>
 
-import AnimeNew from './AnimeNew'
-
 export default {
   name: 'Anime',
   data() {
