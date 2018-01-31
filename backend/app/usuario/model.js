@@ -7,7 +7,8 @@ var Schema = mongoose.Schema({
   	index: { unique: true, dropDups: true }
   },
   password: String,
-  nome: String,
+  name: String,
+  role: String, 
   email: String,
   ativo: {type: Boolean, default: true}
 });
