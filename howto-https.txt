@@ -1,0 +1,2 @@
+sudo certbot --authenticator webroot --installer nginx   --webroot-path /var/www/vuebase/frontend/dist -d vuebase.rubens.ninja
+sudo service nginx reload
