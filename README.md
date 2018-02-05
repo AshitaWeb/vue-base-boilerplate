@@ -1,4 +1,17 @@
-lets check this demo: http://vuebase.rubens.ninja
+VueBase is a Boilerplate for vuejs, a quick way to create administrative systems with login and password already built with jwt
+
+# Technologies
+* Backend in nodejs
+* Frontend in javascript (Vuejs template webpack)
+
+# Support
+
+* Uploads with authenticated routes
+* Https
+
+lets check this demo: https://vuebase.rubens.ninja
+
+login: *admin*, password: *admin*
 
 # SETUP
 ```
@@ -28,9 +41,10 @@ npm run dev
 
 ## TODO
   * !Learn more about stores!
-  * Add https to server
-  * Convert Breadcumbs to a component
-  * Learn how to create routes inside components
+  * Add https to server [DONE]
+  * Convert Breadcumbs to a component [DONE]
+  * Learn how to create routes inside components [NEED HELP]
+  * ACL to control what users can do. @thiagohagy
 
 Any help or pull request is welcome!
 
