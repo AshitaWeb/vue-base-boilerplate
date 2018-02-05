@@ -11,11 +11,14 @@
           <input v-model="form.name" type="text" class="form-control" id="name" placeholder="Name">
         </div>
         <div class="form-group">
-          <label for="image">URL image</label>
-          <input v-model="form.image" type="text" class="form-control" id="image" placeholder="Url image">
-          <hr>
-          <img :src="form.image" :alt="form.name" class="rounded-circle img">
+          <img :src="`${api}/api/v1/anime/image/${form.filename}?token=${token}&mimetype=${form.mimetype}`" :alt="form.name" class="rounded-circle img">
         </div>
+
+        <div class="form-group">
+          <label for="image">Upload Image</label>
+          <vue-dropzone ref="image" id="image" :options="dropzoneOptions" v-on:vdropzone-success="updateImage"></vue-dropzone>
+        </div>
+
         <div class="form-group">
           <router-link to="/anime" class="btn btn-danger">Cancel</router-link>
           <button class="btn btn-primary float-right">Save</button>
@@ -45,17 +48,32 @@
 </template>
 
 <script>
+import vueDropzone from 'vue2-dropzone'
+import ls from 'local-storage'
 
 export default {
   name: 'AnimeNew',
+  components:{
+    vueDropzone
+  },
   data() {
     return {
+      api: '',
+      token: '',
       hasSuccess: false,
       hasError: false,
       form: {
         name: '',
-        image: '',
-      }
+        mimetype: '',
+        filename: '',
+        originalname: ''
+      },
+      dropzoneOptions: this.$http.getDropzoneConfig('v1/anime/upload', 'post', {
+          maxFiles: 1,
+          acceptedFiles: 'image/*',
+          addRemoveLinks: true,
+          capture: true
+      })
     }
   },
   methods: {
@@ -68,7 +86,19 @@ export default {
           this.hasError = true
         }
       });
+    },
+    updateImage(file, response) {
+      this.form.mimetype = response.mimetype
+      this.form.filename = response.filename
+      this.form.originalname = response.originalname
+    },
+    getImage() {
+      this.$http.get('v1/anime/image/')
     }
+  },
+  beforeMount() {
+    this.api = process.env.API_ENV
+    this.token = ls('token')
   }
 }
 </script>

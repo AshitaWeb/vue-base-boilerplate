@@ -31,7 +31,12 @@ const http = {
   post: (url, data) => axios.post(url, data),
   put: (url, data) => axios.put(url, data),
   get: (url) => axios.get(url),
-  delete: (url, data) => axios.delete(url, data)
+  delete: (url, data) => axios.delete(url, data),
+  getDropzoneConfig: (url, method, options) => Object.assign(options, {
+      url: `${process.env.API_ENV}/api/${url}`,
+      headers: { "Authorization": ls('token') },
+      method
+  }),
 };
 
 export default http;

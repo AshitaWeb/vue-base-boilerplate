@@ -1,5 +1,8 @@
 /* Model*/
 var Model = require('./model');
+const config = require('../../config')
+const fs = require('fs')
+const path = require('path')
 
 /* Routes*/
 exports.index = function(req, res) {
@@ -62,4 +65,19 @@ exports.edit = function(req, res) {
 			}
 		}
 	);
+}
+
+exports.upload = (req, res) => {
+	res.json(req.file)
+}
+
+exports.getImage = (req, res) => {
+	res.setHeader('Content-Type', req.query.mimetype)
+	const pathImg = path.join(config.uploadPath, req.params.hash)
+	const exist = fs.existsSync(pathImg)
+	if (exist) {
+		fs.createReadStream(pathImg).pipe(res)
+	} else {
+		res.end()
+	}
 }

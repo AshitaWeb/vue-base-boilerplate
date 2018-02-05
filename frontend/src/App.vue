@@ -37,6 +37,11 @@ export default {
     width: 100%;
     height: 4px;
   }
+
+  .img {
+    height: 75px;
+    width: 75px;
+  }
 </style>
 
 

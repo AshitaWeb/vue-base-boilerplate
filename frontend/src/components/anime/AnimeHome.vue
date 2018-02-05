@@ -24,14 +24,14 @@
                 <tr v-for="item in data" :key="item._id">
                   <td scope="row">{{item.name}}</td>
                   <td>
-                    <img :src="item.image" :alt="item.name" class="rounded-circle img">
+                    <img :src="`${api}/api/v1/anime/image/${item.filename}?token=${token}&mimetype=${item.mimetype}`" :alt="item.name" class="rounded-circle img">
                   </td>
                   <td>
                     <router-link title="Edit" :to="{ name: 'AnimeEdit', params: { id: item._id } }">
                       edit
                     </router-link>
                     /
-                    <a href="javascript;" @click="remove(item._id)" title="Remove">remove</a>
+                    <a href="javascript;" @click.prevent="remove(item._id)" title="Remove">remove</a>
                   </td>
                 </tr>
               </tbody>
@@ -43,12 +43,15 @@
 </template>
 
 <script>
+import ls from 'local-storage'
 
 export default {
   name: 'Anime',
   data() {
     return {
       data: [],
+      api: '',
+      token: ''
     }
   },
   methods: {
@@ -61,17 +64,13 @@ export default {
     }
   },
   beforeMount() {
+    this.api = process.env.API_ENV
+    this.token = ls('token')
+
     this.$http.get('/v1/anime').then((response) => {
-      this.data = response.data.data;
+      this.data = response.data.data
     });
   }
 }
 </script>
-
-<style>
-  .img {
-    height: 75px;
-    width: 75px;
-  }
-</style>
 
