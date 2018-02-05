@@ -3,4 +3,5 @@ module.exports = {
     database: 'mongodb://127.0.0.1:27017/vuebase',
     initialPort: 9090,
     passFixture: '1',
+    uploadPath: '/var/www/projetos/vuebase/backend/uploads'
 };
