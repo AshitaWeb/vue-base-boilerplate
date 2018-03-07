@@ -24,7 +24,7 @@ rotas.post('/', controller.new);
 rotas.put('/', controller.edit);
 
 /*Delete one */
-rotas.delete('/:id', controller.delete);
+// rotas.delete('/:id', controller.delete);
 
 rotas.post('/upload', upload.single('file'), controller.upload);
 

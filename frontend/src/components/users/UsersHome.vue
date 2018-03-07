@@ -33,7 +33,7 @@
                       edit
                     </router-link>
                     /
-                    <a href="javascript;" @click.prevent="remove(item._id)" title="Remove">remove</a>
+                    <!-- <a href="javascript;" @click.prevent="remove(item._id)" title="Remove">remove</a> -->
                   </td>
                 </tr>
               </tbody>
@@ -54,14 +54,14 @@ export default {
     }
   },
   methods: {
-    remove(id) {
-      this.$http.delete(`/v1/usuario/${id}`).then(() => {
-        this.$http.get('/v1/usuario').then((response) => {
-          this.data = response.data.data;
-          this.$router.push('/users');
-        });
-      })
-    }
+    // remove(id) {
+    //   this.$http.delete(`/v1/usuario/${id}`).then(() => {
+    //     this.$http.get('/v1/usuario').then((response) => {
+    //       this.data = response.data.data;
+    //       this.$router.push('/users');
+    //     });
+    //   })
+    // }
   },
   beforeMount() {
     this.$http.get('/v1/usuario').then((response) => {
@@ -72,6 +72,6 @@ export default {
 </script>
 
 <style>
-  
+
 </style>
 

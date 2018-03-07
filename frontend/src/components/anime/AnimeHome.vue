@@ -31,7 +31,7 @@
                       edit
                     </router-link>
                     /
-                    <a href="javascript;" @click.prevent="remove(item._id)" title="Remove">remove</a>
+                    <!-- <a href="javascript;" @click.prevent="remove(item._id)" title="Remove">remove</a> -->
                   </td>
                 </tr>
               </tbody>
@@ -55,13 +55,13 @@ export default {
     }
   },
   methods: {
-    remove(id) {
-      this.$http.delete(`/v1/anime/${id}`).then(() => {
-        this.$http.get('/v1/anime').then((response) => {
-          this.data = response.data.data;
-        });
-      })
-    }
+    // remove(id) {
+    //   this.$http.delete(`/v1/anime/${id}`).then(() => {
+    //     this.$http.get('/v1/anime').then((response) => {
+    //       this.data = response.data.data;
+    //     });
+    //   })
+    // }
   },
   beforeMount() {
     this.api = process.env.API_ENV
