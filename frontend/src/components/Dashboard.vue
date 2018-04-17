@@ -4,7 +4,7 @@
   <div class="row">
     <div class="col">
       <p class="text-center">
-        <img  style="width: 200px;" src="@/assets/logo.png" alt="VueJS Logo">
+        <img  style="width: 200px;" src="/static/logo.png" alt="VueJS Logo">
       </p>
       <div class="jumbotron text-center">
         Welcome to VUEBASE Dashboard with authentication in JWT.
@@ -20,6 +20,6 @@
 
 <script>
 export default {
-  name: 'Dashboard',
-}
+  name: 'Dashboard'
+};
 </script>
