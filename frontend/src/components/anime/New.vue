@@ -11,7 +11,7 @@
           <input v-model="form.name" type="text" class="form-control" id="name" placeholder="Name">
         </div>
         <div class="form-group">
-          <img :src="`${api}/api/v1/anime/image/${form.filename}?token=${token}&mimetype=${form.mimetype}`" :alt="form.name" class="rounded-circle img">
+          <img :src="`${api}/api/v1${route}/image/${form.filename}?token=${token}&mimetype=${form.mimetype}`" :alt="form.name" class="rounded-circle img">
         </div>
 
         <div class="form-group">
@@ -20,7 +20,7 @@
         </div>
 
         <div class="form-group">
-          <router-link to="/anime" class="btn btn-danger">Cancel</router-link>
+          <router-link :to="route" class="btn btn-danger">Cancel</router-link>
           <button class="btn btn-primary float-right">Save</button>
         </div>
 
@@ -48,12 +48,12 @@
 </template>
 
 <script>
-import vueDropzone from 'vue2-dropzone'
-import ls from 'local-storage'
+import vueDropzone from 'vue2-dropzone';
+import ls from 'local-storage';
 
 export default {
   name: 'AnimeNew',
-  components:{
+  components: {
     vueDropzone
   },
   data() {
@@ -68,37 +68,42 @@ export default {
         filename: '',
         originalname: ''
       },
-      dropzoneOptions: this.$http.getDropzoneConfig('v1/anime/upload', 'post', {
+      route: this.$route.matched[0].path,
+      dropzoneOptions: this.$http.getDropzoneConfig(
+        `${this.$route.matched[0].path}/upload`,
+        'post',
+        {
           maxFiles: 1,
           acceptedFiles: 'image/*',
           addRemoveLinks: true,
           capture: true
-      })
-    }
+        }
+      )
+    };
   },
   methods: {
     save() {
-      this.$http.post('v1/anime', this.form).then((response) => {
+      this.$http.post(this.route, this.form).then(response => {
         if (response.data.success) {
-          this.hasSuccess = true
-          this.$router.push('/anime')
+          this.hasSuccess = true;
+          this.$router.push(this.route);
         } else {
-          this.hasError = true
+          this.hasError = true;
         }
       });
     },
     updateImage(file, response) {
-      this.form.mimetype = response.mimetype
-      this.form.filename = response.filename
-      this.form.originalname = response.originalname
+      this.form.mimetype = response.mimetype;
+      this.form.filename = response.filename;
+      this.form.originalname = response.originalname;
     },
     getImage() {
-      this.$http.get('v1/anime/image/')
+      this.$http.get(`${this.route}/image/`);
     }
   },
   beforeMount() {
-    this.api = process.env.API_ENV
-    this.token = ls('token')
+    this.api = process.env.API_ENV;
+    this.token = ls('token');
   }
-}
+};
 </script>

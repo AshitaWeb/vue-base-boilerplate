@@ -16,79 +16,81 @@
 </template>
 
 <script>
-  import store from '@/store'
-  import ls from 'local-storage'
+import store from '@/store';
+import ls from 'local-storage';
+import axios from 'axios';
 
-  export default {
-    name: 'login',
+export default {
+  name: 'login',
 
-    data () {
-        return {
-            infoError: false,
-            form: {
-              login: '',
-              password: '',
-            },
-        }
-    },
-
-    beforeCreate () {
-      if (store.state.isLogged) {
-        this.$router.push('/')
+  data() {
+    return {
+      infoError: false,
+      form: {
+        login: '',
+        password: ''
       }
-    },
+    };
+  },
 
-    methods: {
-      logar () {
-        this.infoError = false
+  beforeCreate() {
+    if (store.state.isLogged) {
+      this.$router.push('/');
+    }
+  },
 
-        this.$http.post('login', this.form).then((response) => {
+  methods: {
+    logar() {
+      this.infoError = false;
+
+      axios
+        .post(`${process.env.API_ENV}/api/login`, this.form)
+        .then(response => {
           if (response.data.success) {
-            ls('token', response.data.token)
-            store.commit('LOGIN_USER')
-            this.$router.push('/')
+            ls('token', response.data.token);
+            store.commit('LOGIN_USER');
+            this.$router.push('/');
           } else {
-            this.infoError = true
+            this.infoError = true;
           }
-        })
-      },
+        });
     }
   }
-
+};
 </script>
 
 <style>
-  .form-signin {
-    max-width: 330px;
-    padding: 15px;
-    margin: 80px auto;
-  }
-  .form-signin .form-signin-heading,
-  .form-signin .checkbox {
-    margin-bottom: 10px;
-  }
-  .form-signin .checkbox {
-    font-weight: normal;
-  }
-  .form-signin .form-control {
-    position: relative;
-    height: auto;
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-    padding: 10px;
-    font-size: 16px;
-  }
-  .form-signin .form-control:focus {
-    z-index: 2;
-  }
-  .form-signin input[type="email"] {
-    margin-bottom: -1px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-  .form-signin input[type="password"] {
-    margin-bottom: 10px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-  }
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 80px auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type='email'] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type='password'] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
 </style>

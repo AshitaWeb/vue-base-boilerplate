@@ -1,25 +1,30 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Dashboard from '@/components/Dashboard'
-import Login from '@/components/Login'
-import Logout from '@/components/Logout'
+import Vue from 'vue';
+import Router from 'vue-router';
+import Dashboard from '@/components/Dashboard';
+import Login from '@/components/Login';
+import Logout from '@/components/Logout';
 
-import Anime from '@/components/anime/Anime'
-import AnimeHome from '@/components/anime/AnimeHome'
-import AnimeNew from '@/components/anime/AnimeNew'
-import AnimeEdit from '@/components/anime/AnimeEdit'
+import Anime from '@/components/anime/Root';
+import AnimeHome from '@/components/anime/Home';
+import AnimeNew from '@/components/anime/New';
+import AnimeEdit from '@/components/anime/Edit';
 
-import Users from '@/components/users/Users';
-import UsersHome from '@/components/users/UsersHome';
-import UsersNew from '@/components/users/UsersNew';
-import UsersEdit from '@/components/users/UsersEdit';
+import Alimento from '@/components/alimento/Root';
+import AlimentoHome from '@/components/alimento/Home';
+import AlimentoNew from '@/components/alimento/New';
+import AlimentoEdit from '@/components/alimento/Edit';
 
-Vue.use(Router)
+import Users from '@/components/users/Root';
+import UsersHome from '@/components/users/Home';
+import UsersNew from '@/components/users/New';
+import UsersEdit from '@/components/users/Edit';
+
+Vue.use(Router);
 
 export default new Router({
   mode: 'history',
   base: '/',
-  linkExactActiveClass: "active",
+  linkExactActiveClass: 'active',
   routes: [
     {
       path: '/',
@@ -27,7 +32,7 @@ export default new Router({
       component: Dashboard,
       meta: {
         humanName: 'Dashboard',
-        showOnNav: true,
+        showOnNav: true
       }
     },
     // ANIMES
@@ -47,7 +52,7 @@ export default new Router({
           component: AnimeHome,
           meta: {
             humanName: 'List'
-          },
+          }
         },
         {
           path: 'new',
@@ -55,7 +60,7 @@ export default new Router({
           component: AnimeNew,
           meta: {
             humanName: 'New'
-          },
+          }
         },
         {
           path: 'edit/:id',
@@ -63,9 +68,46 @@ export default new Router({
           component: AnimeEdit,
           meta: {
             humanName: 'Edit'
-          },
+          }
         }
-      ],
+      ]
+    },
+    // Alimentos
+    {
+      path: '/alimento',
+      redirect: '/alimento/home',
+      name: 'Alimento',
+      component: Alimento,
+      meta: {
+        humanName: 'Alimentos',
+        showOnNav: true
+      },
+      children: [
+        {
+          path: 'home',
+          name: 'AlimentoHome',
+          component: AlimentoHome,
+          meta: {
+            humanName: 'List'
+          }
+        },
+        {
+          path: 'new',
+          name: 'AlimentoNew',
+          component: AlimentoNew,
+          meta: {
+            humanName: 'New'
+          }
+        },
+        {
+          path: 'edit/:id',
+          name: 'AlimentoEdit',
+          component: AlimentoEdit,
+          meta: {
+            humanName: 'Edit'
+          }
+        }
+      ]
     },
     // USERS
     {
@@ -84,7 +126,7 @@ export default new Router({
           component: UsersHome,
           meta: {
             humanName: 'List'
-          },
+          }
         },
         {
           path: 'new',
@@ -92,7 +134,7 @@ export default new Router({
           component: UsersNew,
           meta: {
             humanName: 'New'
-          },
+          }
         },
         {
           path: 'edit/:id',
@@ -100,9 +142,9 @@ export default new Router({
           component: UsersEdit,
           meta: {
             humanName: 'Edit'
-          },
+          }
         }
-      ],
+      ]
     },
     {
       path: '/login',
@@ -113,6 +155,6 @@ export default new Router({
       path: '/logout',
       name: 'Logout',
       component: Logout
-    },
+    }
   ]
-})
+});
