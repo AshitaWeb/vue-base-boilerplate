@@ -57,11 +57,6 @@ export default {
   name: 'UsersEdit',
   data() {
     return {
-      hasSuccess: false,
-      hasError: false,
-      errorMessage: '',
-      hasSuccess: false,
-      successMessage: '',
       validatePassword: false,
       form: {
         login: '',
