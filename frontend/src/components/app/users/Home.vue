@@ -70,8 +70,9 @@ export default {
       this.page = page;
 
       const skip = (page - 1) * this.perPage;
+      const limit = this.perPage;
 
-      this.$http.get(`${this.route}/${skip}/${this.perPage}`).then(response => {
+      this.$http.post(`${this.route}/list`, { skip, limit }).then(response => {
         this.data = response.data.data;
         this.total = response.data.total;
       });

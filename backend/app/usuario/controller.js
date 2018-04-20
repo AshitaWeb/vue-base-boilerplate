@@ -1,125 +1,60 @@
 /* Model*/
-var Model = require('./model');
-var bcrypt = require('bcrypt-nodejs');
+const Model = require('./model');
+const bcrypt = require('bcrypt-nodejs');
+const to = require('../../core/to');
 
 /* Routes*/
-exports.index = function(req, res) {
-	var texto = req.params.text;
+exports.index = async (req, res) => {
+  const [err, data] = await to(
+    Model.find()
+      .skip(req.body.skip || 0)
+      .limit(req.body.limit || 50)
+  );
 
-	var filtro = {};
-	filtro.ativo = true;
+  const total = await Model.find().count();
 
-	if (texto) {
-		texto = decodeURI(texto);
-		filtro.$or = [];
-		filtro.$or.push({nome: {$regex: texto, $options: 'ig'} });
-	}
+  res.json({ total, data });
+};
 
-	Model.find(filtro)
-		.skip(parseInt(req.params.skip) || 0).limit(parseInt(req.params.limit) || 25)
-		.exec(function(err, data){ //o que fazer com o resultado
+exports.get = async (req, res) => {
+  const data = await Model.findOne({ _id: req.params.id });
+  res.json(data);
+};
 
-				Model.find(filtro).count()
-				.exec(function(err, total){
-					var response = {};
-					response.total = total;
-					response.data = data;
-					res.json(response);
-				});
-		});
-}
+exports.new = async (req, res) => {
+  var model = new Model(req.body);
+  const [err, data] = await to(model.save());
 
+  if (!err && data) {
+    res.json({ success: true, data, err, form: req.body });
+  } else {
+    res.json({ succsess: false, data, err, form: req.body });
+  }
+};
 
-exports.inativos = function(req, res) {
-	var texto = req.params.text;
+exports.delete = async (req, res) => {
+  const data = await Model.remove({ _id: req.params.id });
+  res.json(data);
+};
 
-	var filtro = {};
-	filtro.ativo = false;
+exports.edit = async (req, res) => {
+  const model = await Model.findOne({ _id: req.body._id });
 
-	if (texto) {
-		texto = decodeURI(texto);
-		filtro.$or = [];
-		filtro.$or.push({nome: {$regex: texto, $options: 'ig'} });
-	}
+  if (req.body.password && req.body.password !== '') {
+    model.password = req.body.password;
+  }
 
-	Model.find(filtro)
-		.skip(parseInt(req.params.skip) || 0).limit(parseInt(req.params.limit) || 25)
-		.exec(function(err, data){ //o que fazer com o resultado
+  model.login = req.body.login;
+  model.nome = req.body.nome;
+  model.email = req.body.email;
+  model.name = req.body.name;
+  model.role = req.body.role;
 
-				Model.find(filtro).count()
-				.exec(function(err, total){
-					var response = {};
-					response.total = total;
-					response.data = data;
-					res.json(response);
-				});
+  const [err, data] = await to(model.save);
 
-		});
-}
-
-exports.get = function(req, res) {
-	Model.findOne(
-		{_id: req.params.id},// Where
-		{password: 0},
-		function(err, data){ // o que fazer com o resultado
-			res.json(data);
-		}
-	);
-}
-
-exports.new = function(req, res) {
-	var model = new Model(req.body);
-	model.save(function (err, data) {
-		//err null quando ta tudo certo, data traz o model inserido,
-	  	if (!err && data) {
-	  		//form apenas para debugar
-			res.json({"success": true, "data": data, "err" : err, "form" : req.body});
-		} else {
-			res.json({"success": false, "data": data, "err" : err, "form" : req.body});
-		}
-	});
-}
-
-exports.delete = function(req, res) {
-	Model.remove({_id: req.params.id},function(err, data) {
-		res.json(data);
-	})
-}
-
-exports.edit = function(req, res) {
-
-	Model.findOne(
-		{_id: req.body._id},
-		function (err, model){
-			if (req.body.password && req.body.password !== "") {
-				model.password = req.body.password;
-			}
-			model.login = req.body.login;
-			model.nome = req.body.nome;
-			model.email = req.body.email;
-			model.name = req.body.name;
-			model.role = req.body.role;
-
-			model.save(function(err, data){
-				if (!err && data) {
-					res.json({"success": true, "data": data, "err" : err, "form" : req.body});
-				} else {
-					res.json({"success": false, "data": data, "err" : err, "form" : req.body});
-				}
-			});
-		}
-	);
-/*
-
-	Model.update(
-		{_id: req.body._id}, //where
-		req.body,//options
-		function (err, data){
-			if (!err && data) {
-				res.json({"success": true, "data": data, "err" : err, "form" : req.body});
-			} else {
-				res.json({"success": false, "data": data, "err" : err, "form" : req.body});
-			}
-		}
-	);*/
-}
+  if (!err && data) {
+    res.json({ success: true, data, err, form: req.body });
+  } else {
+    res.json({ success: false, data, err, form: req.body });
+  }
+};

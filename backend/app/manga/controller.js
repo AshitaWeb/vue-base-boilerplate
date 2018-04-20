@@ -4,66 +4,49 @@ const config = require('../../config');
 const fs = require('fs');
 const path = require('path');
 
-/* Routes*/
-exports.index = function(req, res) {
-  var texto = req.params.text;
-  const filtro = {};
+const to = require('../../core/to');
 
-  Model.find(filtro)
-    .skip(parseInt(req.params.skip) || 0)
-    .limit(parseInt(req.params.limit) || 50)
-    .exec(function(err, data) {
-      //o que fazer com o resultado
-      Model.find(filtro)
-        .count()
-        .exec(function(err, total) {
-          var response = {};
-          response.total = total;
-          response.data = data;
-          res.json(response);
-        });
-    });
-};
-
-exports.get = function(req, res) {
-  Model.findOne(
-    { _id: req.params.id }, // Where
-    function(err, data) {
-      // o que fazer com o resultado
-      res.json(data);
-    }
+exports.index = async (req, res) => {
+  const [err, data] = await to(
+    Model.find()
+      .skip(req.body.skip || 0)
+      .limit(req.body.limit || 50)
   );
+
+  const total = await Model.find().count();
+
+  res.json({ total, data });
 };
 
-exports.new = function(req, res) {
+exports.get = async (req, res) => {
+  const data = await Model.findOne({ _id: req.params.id });
+  res.json(data);
+};
+
+exports.new = async (req, res) => {
   var model = new Model(req.body);
-  model.save(function(err, data) {
-    //err null quando ta tudo certo, data traz o model inserido,
-    if (!err && data) {
-      //form apenas para debugar
-      res.json({ success: true, data: data, err: err, form: req.body });
-    } else {
-      res.json({ success: false, data: data, err: err, form: req.body });
-    }
-  });
+  const [err, data] = await to(model.save());
+
+  if (!err && data) {
+    res.json({ success: true, data, err, form: req.body });
+  } else {
+    res.json({ succsess: false, data, err, form: req.body });
+  }
 };
 
-exports.delete = function(req, res) {
-  Model.remove({ _id: req.params.id }, function(err, data) {
-    res.json(data);
-  });
+exports.delete = async (req, res) => {
+  const data = await Model.remove({ _id: req.params.id });
+  res.json(data);
 };
 
-exports.edit = function(req, res) {
-  Model.update(
-    { _id: req.body._id }, //where
-    req.body, //options
-    function(err, data) {
-      if (!err && data) {
-        res.json({ success: true, data: data, err: err, form: req.body });
-      } else {
-        res.json({ success: false, data: data, err: err, form: req.body });
-      }
-    }
+exports.edit = async (req, res) => {
+  const [err, data] = await to(
+    Model.update({ _id: req.body._id }, { $set: req.body })
   );
+
+  if (!err && data) {
+    res.json({ success: true, data, err, form: req.body });
+  } else {
+    res.json({ success: false, data, err, form: req.body });
+  }
 };

@@ -1,12 +1,5 @@
-var express = require('express');
-var rotas = express.Router();
-/*arquivo com as funcoes da rota*/
-var controller = require('./auth.controller');
-
-
-/*Rotas*/
-/*get all*/
+const express = require('express');
+const rotas = express.Router();
+const controller = require('./controller');
 rotas.post('/login', controller.login);
-
-/*Export*/
 module.exports = rotas;

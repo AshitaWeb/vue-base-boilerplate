@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var Schema = mongoose.Schema({
-	name: String,
+const Schema = mongoose.Schema({
+  name: String,
   mimetype: String,
   filename: String,
   originalname: String
