@@ -14,7 +14,6 @@ exports.index = function(req, res) {
     .limit(parseInt(req.params.limit) || 50)
     .exec(function(err, data) {
       //o que fazer com o resultado
-
       Model.find(filtro)
         .count()
         .exec(function(err, total) {
@@ -67,19 +66,4 @@ exports.edit = function(req, res) {
       }
     }
   );
-};
-
-exports.upload = (req, res) => {
-  res.json(req.file);
-};
-
-exports.getImage = (req, res) => {
-  res.setHeader('Content-Type', req.query.mimetype);
-  const pathImg = path.join(config.uploadPath, req.params.hash);
-  const exist = fs.existsSync(pathImg);
-  if (exist) {
-    fs.createReadStream(pathImg).pipe(res);
-  } else {
-    res.end();
-  }
 };

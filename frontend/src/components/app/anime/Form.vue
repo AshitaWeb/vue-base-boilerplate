@@ -18,29 +18,12 @@
 
         <div class="form-group">
           <label for="image">Upload Image</label>
-
           <vue-dropzone ref="image" id="image" :options="dropzoneOptions" v-on:vdropzone-success="updateImage"></vue-dropzone>
         </div>
 
         <div class="form-group">
           <router-link :to="route" class="btn btn-danger">Cancel</router-link>
-          <button :disabled="!form._id" class="btn btn-primary float-right">Update</button>
-        </div>
-
-        <div class="alert alert-success alert-dismissible" role="alert" v-show="hasSuccess">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            <span class="sr-only">Close</span>
-          </button>
-          Anime updated!
-        </div>
-
-        <div class="alert alert-danger alert-dismissible" role="alert" v-show="hasError">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            <span class="sr-only">Close</span>
-          </button>
-          Error, try again.
+          <button class="btn btn-primary float-right">Save</button>
         </div>
 
       </form>
@@ -55,7 +38,6 @@ import vueDropzone from 'vue2-dropzone';
 import ls from 'local-storage';
 
 export default {
-  name: 'AnimeEdit',
   components: {
     vueDropzone
   },
@@ -63,11 +45,8 @@ export default {
     return {
       api: '',
       token: '',
-      hasSuccess: false,
-      hasError: false,
       form: {
         name: '',
-        _id: '',
         mimetype: '',
         filename: '',
         originalname: ''
@@ -87,12 +66,14 @@ export default {
   },
   methods: {
     save() {
-      this.$http.put(this.route, this.form).then(response => {
+      const method = this.$route.params.id ? this.$http.put : this.$http.post;
+
+      method(this.route, this.form).then(response => {
         if (response.data.success) {
-          this.hasSuccess = true;
+          this.$toasted.show('Cadastrado com sucesso!', this.$custom.success);
           this.$router.push(this.route);
         } else {
-          this.hasError = true;
+          this.$toasted.show('Ocorreu um erro!', this.$custom.error);
         }
       });
     },
@@ -108,9 +89,14 @@ export default {
   beforeMount() {
     this.api = process.env.API_ENV;
     this.token = ls('token');
-    this.$http.get(`${this.route}/${this.$route.params.id}`).then(response => {
-      if (response.data) this.form = response.data;
-    });
+
+    if (this.$route.params.id) {
+      this.$http
+        .get(`${this.route}/${this.$route.params.id}`)
+        .then(response => {
+          if (response.data) this.form = response.data;
+        });
+    }
   }
 };
 </script>

@@ -71,7 +71,7 @@ export default {
   methods: {
     save() {
       if (
-        !this.form.password ||
+        (!this.form.password && !this.$route.params.id) ||
         !this.form.login ||
         (this.form.password != this.form.passwordConfirm &&
           this.validatePassword == true)
@@ -81,8 +81,9 @@ export default {
           this.$custom.error
         );
       } else {
-        this.hasError = false;
-        this.$http.post(this.route, this.form).then(response => {
+        const method = this.$route.params.id ? this.$http.put : this.$http.post;
+
+        method(this.route, this.form).then(response => {
           if (response.data.success) {
             this.$toasted.show('Cadastrado com sucesso!', this.$custom.success);
             this.$router.push(this.route);
@@ -94,6 +95,15 @@ export default {
     },
     passwordChanged() {
       this.validatePassword = true;
+    }
+  },
+  beforeMount() {
+    if (this.$route.params.id) {
+      this.$http
+        .get(`${this.route}/${this.$route.params.id}`)
+        .then(response => {
+          if (response.data) this.form = response.data;
+        });
     }
   }
 };

@@ -18,7 +18,6 @@
       </form>
     </div>
   </div>
-
 </div>
 </template>
 
@@ -26,7 +25,6 @@
 import ls from 'local-storage';
 
 export default {
-  name: 'AlimentoNew',
   data() {
     return {
       form: {
@@ -37,7 +35,9 @@ export default {
   },
   methods: {
     save() {
-      this.$http.post(this.route, this.form).then(response => {
+      const method = this.$route.params.id ? this.$http.put : this.$http.post;
+
+      method(this.route, this.form).then(response => {
         if (response.data.success) {
           this.$toasted.show('Cadastrado com sucesso!', this.$custom.success);
           this.$router.push(this.route);
@@ -45,6 +45,15 @@ export default {
           this.$toasted.show('Ocorreu um erro!', this.$custom.error);
         }
       });
+    }
+  },
+  beforeMount() {
+    if (this.$route.params.id) {
+      this.$http
+        .get(`${this.route}/${this.$route.params.id}`)
+        .then(response => {
+          if (response.data) this.form = response.data;
+        });
     }
   }
 };

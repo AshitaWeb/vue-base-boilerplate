@@ -35,7 +35,7 @@ app.use('/api/v1', jwt);
 /*Modulos*/
 jwt.use('/users', require('./app/usuario'));
 jwt.use('/anime', require('./app/anime'));
-jwt.use('/alimento', require('./app/alimento'));
+jwt.use('/manga', require('./app/manga'));
 
 var id = Number(process.env.id);
 var hit = 0;

@@ -3,9 +3,5 @@
 </template>
 
 <script>
-
-export default {
-  name: 'Users',
-}
-
+export default {};
 </script>

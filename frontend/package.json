@@ -20,6 +20,7 @@
     "open-iconic": "^1.1.1",
     "popper.js": "^1.12.9",
     "vue": "^2.5.2",
+    "vue-pagination-2": "^1.6.1",
     "vue-router": "^3.0.1",
     "vue-toasted": "^1.1.24",
     "vue2-dropzone": "^3.0.3",

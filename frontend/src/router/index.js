@@ -1,23 +1,21 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Dashboard from '@/components/Dashboard';
-import Login from '@/components/Login';
-import Logout from '@/components/Logout';
 
-import Anime from '@/components/anime/Root';
-import AnimeHome from '@/components/anime/Home';
-import AnimeNew from '@/components/anime/New';
-import AnimeEdit from '@/components/anime/Edit';
+import Root from '@/components/Root';
 
-import Alimento from '@/components/alimento/Root';
-import AlimentoHome from '@/components/alimento/Home';
-import AlimentoNew from '@/components/alimento/New';
-import AlimentoEdit from '@/components/alimento/Edit';
+import Home from '@/components/app/home/Home';
 
-import Users from '@/components/users/Root';
-import UsersHome from '@/components/users/Home';
-import UsersNew from '@/components/users/New';
-import UsersEdit from '@/components/users/Edit';
+import Login from '@/components/app/auth/Login';
+import Logout from '@/components/app/auth/Logout';
+
+import AnimeHome from '@/components/app/anime/Home';
+import AnimeForm from '@/components/app/anime/Form';
+
+import mangaHome from '@/components/app/manga/Home';
+import mangaForm from '@/components/app/manga/Form';
+
+import UsersHome from '@/components/app/users/Home';
+import UsersForm from '@/components/app/users/Form';
 
 Vue.use(Router);
 
@@ -28,10 +26,9 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Dashboard',
-      component: Dashboard,
+      component: Home,
       meta: {
-        humanName: 'Dashboard',
+        humanName: 'Home',
         showOnNav: true
       }
     },
@@ -39,8 +36,7 @@ export default new Router({
     {
       path: '/anime',
       redirect: '/anime/home',
-      name: 'Anime',
-      component: Anime,
+      component: Root,
       meta: {
         humanName: 'Animes',
         showOnNav: true
@@ -48,7 +44,6 @@ export default new Router({
       children: [
         {
           path: 'home',
-          name: 'AnimeHome',
           component: AnimeHome,
           meta: {
             humanName: 'List'
@@ -56,53 +51,47 @@ export default new Router({
         },
         {
           path: 'new',
-          name: 'AnimeNew',
-          component: AnimeNew,
+          component: AnimeForm,
           meta: {
             humanName: 'New'
           }
         },
         {
           path: 'edit/:id',
-          name: 'AnimeEdit',
-          component: AnimeEdit,
+          component: AnimeForm,
           meta: {
             humanName: 'Edit'
           }
         }
       ]
     },
-    // Alimentos
+    // Manga
     {
-      path: '/alimento',
-      redirect: '/alimento/home',
-      name: 'Alimento',
-      component: Alimento,
+      path: '/manga',
+      redirect: '/manga/home',
+      component: Root,
       meta: {
-        humanName: 'Alimentos',
+        humanName: 'Mangas',
         showOnNav: true
       },
       children: [
         {
           path: 'home',
-          name: 'AlimentoHome',
-          component: AlimentoHome,
+          component: mangaHome,
           meta: {
             humanName: 'List'
           }
         },
         {
           path: 'new',
-          name: 'AlimentoNew',
-          component: AlimentoNew,
+          component: mangaForm,
           meta: {
             humanName: 'New'
           }
         },
         {
           path: 'edit/:id',
-          name: 'AlimentoEdit',
-          component: AlimentoEdit,
+          component: mangaForm,
           meta: {
             humanName: 'Edit'
           }
@@ -113,8 +102,7 @@ export default new Router({
     {
       path: '/users',
       redirect: '/users/home',
-      name: 'Users',
-      component: Users,
+      component: Root,
       meta: {
         humanName: 'Users',
         showOnNav: true
@@ -122,7 +110,6 @@ export default new Router({
       children: [
         {
           path: 'home',
-          name: 'UsersHome',
           component: UsersHome,
           meta: {
             humanName: 'List'
@@ -130,16 +117,14 @@ export default new Router({
         },
         {
           path: 'new',
-          name: 'UsersNew',
-          component: UsersNew,
+          component: UsersForm,
           meta: {
             humanName: 'New'
           }
         },
         {
           path: 'edit/:id',
-          name: 'UsersEdit',
-          component: UsersEdit,
+          component: UsersForm,
           meta: {
             humanName: 'Edit'
           }

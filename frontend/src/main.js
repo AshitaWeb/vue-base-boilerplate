@@ -12,11 +12,14 @@ import App from './App';
 import router from '@/router';
 import http from './services/http';
 
-import Breadcrumb from '@/components/Breadcrumb';
+import Breadcrumb from '@/components/custom/Breadcrumb';
 Vue.component('breadcrumb', Breadcrumb);
 
-import AlertMessage from '@/components/AlertMessage';
+import AlertMessage from '@/components/custom/AlertMessage';
 Vue.component('alertMessage', AlertMessage);
+
+import { Pagination } from 'vue-pagination-2';
+Vue.component('pagination', Pagination);
 
 import Toasted from 'vue-toasted';
 Vue.use(Toasted, {
@@ -41,6 +44,14 @@ Vue.prototype.$custom = {
   error: {
     type: 'error',
     icon: 'close'
+  },
+  pagOpts: {
+    texts: {
+      count:
+        'Exibindo do {from} até {to} de {count} registros|{count} registros|1 registro',
+      first: 'Primeira',
+      last: 'Última'
+    }
   }
 };
 

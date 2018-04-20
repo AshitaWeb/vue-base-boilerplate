@@ -4,4 +4,4 @@ var Schema = mongoose.Schema({
 	nome: String,
 });
 
-module.exports = mongoose.model('Alimento', Schema);
+module.exports = mongoose.model('Manga', Schema);
